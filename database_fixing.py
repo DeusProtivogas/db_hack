@@ -7,15 +7,17 @@ from datacenter.models import Lesson
 
 
 def fix_marks(schoolkid):
+    student = Schoolkid.objects.get(full_name__contains=schoolkid)
     Mark.objects.filter(
         points__lt=4,
-        schoolkid__full_name__contains=schoolkid
+        schoolkid=student,
     ).update(points=5)
 
 
 def remove_chastisements(schoolkid):
+    student = Schoolkid.objects.get(full_name__contains=schoolkid)
     Chastisement.objects.filter(
-        schoolkid__full_name__contains=schoolkid
+        schoolkid=student,
     ).delete()
 
 
